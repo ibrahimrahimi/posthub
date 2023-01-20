@@ -6,8 +6,11 @@ import shareVideo from '../assets/share.mp4';
 import logo from '../assets/logowhite.png';
 import axios from 'axios';
 
+import {client} from '../client';
+
 
 const Login = () => {
+	const navigate = useNavigate();
 	const login = useGoogleLogin({
 		onSuccess: async respone => {
 			try {
@@ -16,16 +19,17 @@ const Login = () => {
 						'Authorization': `Bearer ${respone.access_token}`
 					}
 				})
-				console.log(data.data);
 				localStorage.setItem('user', JSON.stringify(data.data));
-				const {name, sub, picture} = data.data;
-				console.log(name, sub, picture);
+				const { name, sub, picture } = data.data;
 				const userDetails = {
 					_id: sub,
 					_type: 'user',
 					userName: name,
 					image: picture,
 				}
+				client.createIfNotExists(userDetails).then(() => {
+					navigate('/', {replace: true});
+				})
 			} catch(error) {
 				console.log(error);
 			}
