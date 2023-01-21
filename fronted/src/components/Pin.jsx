@@ -15,25 +15,26 @@ function Pin({ pin: {postedBy, image, _id, destination, save } }) {
     
     const user = fetchUser();
 
-    const alreadySaved = (save?.filter((item) => item.postedBy._id === user.sub)).lenght;
+    const alreadySaved = !!(save?.filter((item) => item.postedBy._id === user.sub))?.lenght;
 
     return (
-        <div className='m-2'>
-            <div 
+        <div className="m-2">
+            <div
                 onMouseEnter={() => setPostHovered(true)}
                 onMouseLeave={() => setPostHovered(false)}
                 onClick={() => navigate(`/pin-detail/${_id}`)}
-                className="relateive cursor-zoom-in w-auto hover:shadow-lg rounded-lg overflow-hidden transition-all duration-500 ease-in-out"
+                className=" relative cursor-zoom-in w-auto hover:shadow-lg rounded-lg overflow-hidden transition-all duration-500 ease-in-out"
             >
-            {image && (<img src={(urlFor(image).width(250).url())} alt="user-post" className='rounded-lg w-full' />)}
-            {postHovered && (
-                <div 
+            {image && (
+                <img className="rounded-lg w-full " src={(urlFor(image).width(250).url())} alt="user-post" /> )}
+                {postHovered && (
+                <div
                     className="absolute top-0 w-full h-full flex flex-col justify-between p-1 pr-2 pt-2 pb-2 z-50"
-                    style={{height: '100%'}}
+                    style={{ height: '100%' }}
                 >
                     <div className="flex items-center justify-between">
                         <div className="flex gap-2">
-                            <a 
+                            <a
                                 href={`${image?.asset?.url}?dl=`}
                                 download
                                 onClick={(e) => {e.stopPropagation();}}
@@ -42,6 +43,21 @@ function Pin({ pin: {postedBy, image, _id, destination, save } }) {
                                 <MdDownloadForOffline />
                             </a>
                         </div>
+                        {alreadySaved?.length !== 0 ? (
+                            <button 
+                                type="button" 
+                                className="bg-red-500 opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-3xl hover:shadow-md outline-none"
+                            >
+                                {save?.length}  Saved
+                            </button>
+                            ) : (
+                            <button
+                                type="button"
+                                className="bg-red-500 opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-3xl hover:shadow-md outline-none"
+                            >
+                                {save?.length}   {savingPost ? 'Saving' : 'Save'}
+                            </button>
+                        )}
                     </div>
                 </div>
             )}
