@@ -5,14 +5,18 @@ import { client, urlFor } from '../client';
 import { MdDownloadForOffline } from 'react-icons/md';
 import { AiTwotoneDelete } from 'react-icons/ai';
 import { BsFillArrowUpRightCircleFill } from 'react-icons/bs';
+import { fetchUser } from '../utils/fetchUser';
 
 
-function Pin({ pin: {postedBy, image, _id, destination } }) {
+function Pin({ pin: {postedBy, image, _id, destination, save } }) {
     const [postHovered, setPostHovered] = useState(false);
     const [savingPost, setSavingPost] = useState(false);
-
     const navigate = useNavigate();
     
+    const user = fetchUser();
+
+    const alreadySaved = (save?.filter((item) => item.postedBy._id === user.sub)).lenght;
+
     return (
         <div className='m-2'>
             <div 
