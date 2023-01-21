@@ -16,13 +16,13 @@ function Feed() {
         
         if(categoryId) {
             const query = searchQuery(categoryId);
+            
             client.fetch(query).then((data) => {
                 setPins(data);
                 setLoading(false);
             });
         } else {
             setLoading(true);
-
             client.fetch(feedQuery).then((data) => {
                 setPins(data);
                 setLoading(false);
