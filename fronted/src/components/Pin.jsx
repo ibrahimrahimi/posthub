@@ -8,14 +8,41 @@ import { BsFillArrowUpRightCircleFill } from 'react-icons/bs';
 import { fetchUser } from '../utils/fetchUser';
 
 
-function Pin({ pin: {postedBy, image, _id, destination, save } }) {
+function Pin({ pin }) {
     const [postHovered, setPostHovered] = useState(false);
     const [savingPost, setSavingPost] = useState(false);
     const navigate = useNavigate();
     
+    const {postedBy, image, _id, destination } = pin;
+
     const user = fetchUser();
 
-    const alreadySaved = !!(save?.filter((item) => item.postedBy._id === user.sub))?.lenght;
+    const alreadySaved = (pin?.save?.filter((item) => item.postedBy._id === user.sub));
+    console.log('is already saved ', alreadySaved);
+    const savePin = (id) => {
+        if(alreadySaved.lenght !== 0) {
+            setSavingPost(true);
+
+            client.patch(id)
+            .setIfMissing({ save: [] })
+            .insert('after', 'save[-1]', [{
+                _key: uuidv4(),
+                userId: user?.sub,
+                postedBy: {
+                    _type: 'postedBy',
+                    _ref: user?.sub,
+                },
+            }])
+            .commit()
+            .then(() => {
+                window.location.reload();
+                setSavingPost(false);
+            });
+        }
+    };
+
+    console.log('save', pin, pin?.save);
+    console.log(pin?.save?.lenght);
 
     return (
         <div className="m-2">
@@ -48,14 +75,15 @@ function Pin({ pin: {postedBy, image, _id, destination, save } }) {
                                 type="button" 
                                 className="bg-red-500 opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-3xl hover:shadow-md outline-none"
                             >
-                                {save?.length}  Saved
+                                {pin?.save?.length} Saved
                             </button>
                             ) : (
                             <button
                                 type="button"
+                                onClick={(e) => {e.stopPropagation(); savePin(_id);}}
                                 className="bg-red-500 opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-3xl hover:shadow-md outline-none"
                             >
-                                {save?.length}   {savingPost ? 'Saving' : 'Save'}
+                                {pin?.save?.length}   {savingPost ? 'Saving' : 'Save'}
                             </button>
                         )}
                     </div>
