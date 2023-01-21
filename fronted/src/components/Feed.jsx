@@ -6,7 +6,7 @@ import MasonryLayout from './MasonryLayout';
 import Spinner from './Spinner';
 
 function Feed() {
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     
     if(loading) return <Spinner message="We are adding new ideas to your feed!"/>    
     return (
