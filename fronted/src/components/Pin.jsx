@@ -49,14 +49,13 @@ function Pin({ pin }) {
             });
     };
 
-    console.log(destination);
     return (
         <div className="m-2">
             <div
                 onMouseEnter={() => setPostHovered(true)}
                 onMouseLeave={() => setPostHovered(false)}
                 onClick={() => navigate(`/pin-detail/${_id}`)}
-                className=" relative cursor-zoom-in w-auto hover:shadow-lg rounded-lg overflow-hidden transition-all duration-500 ease-in-out"
+                className="relative cursor-zoom-in w-auto hover:shadow-lg rounded-lg overflow-hidden transition-all duration-500 ease-in-out"
             >
             {image && (
                 <img className="rounded-lg w-full " src={(urlFor(image).width(250).url())} alt="user-post" /> )}
