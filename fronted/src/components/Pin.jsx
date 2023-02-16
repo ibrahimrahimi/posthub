@@ -44,7 +44,7 @@ function Pin({ pin }) {
             .delete(id)
             .then(() => {
                 window.location.reload();
-            });
+        });
     };
 
     return (
