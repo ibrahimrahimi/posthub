@@ -45,17 +45,23 @@ const PinDetail = ({ pin }) => {
     }
 
   return (
-    <div className='flex flex-col xl:flex-col m-auto bg-white' style={{maxWidth: '1500px', borderRaius: '32px' }}>
+    <div className='flex flex-col xl:flex-row m-auto bg-white' style={{maxWidth: '1500px', borderRaius: '32px' }}>
         <div className="flex justify-center items-center md:items-start flex-initial">
-            <img src={(pinDetail?.image && urlFor(pinDetail.image).url())} alt="user-post" className="rounded-3xl rounded-b-lg" />
+            <img 
+                src={(pinDetail?.image && urlFor(pinDetail.image).url())} 
+                alt="user-post" 
+                className="rounded-t-3xl rounded-b-lg" 
+            />
         </div>
-        <div className="w-full p-5 flex-1-xl:min-w-620">
+        <div className="w-full p-5 flex-1 xl:min-w-620">
             <div className="flex items-center justify-between">
                 <div className="flex gap-2 items-center">
                     <a 
-                        href={`${pinDetail.image.asset.url}?dl=`}
                         download 
-                        className="bg-secondaryColor p-2 text-xl flex items-center justify-center text-dark opacity-75 hover:opacity-100">
+                        href={`${pinDetail.image.asset.url}?dl=`}
+                        onClick={(e) => e.stopPropagation()}
+                        className="bg-gray-100 w-9 h-9 p-2 rounded-full flex items-center justify-center text-dark text-xl opacity-75 hover:opacity-100 hover:shadow-md outline-none"
+                    >
                         <MdDownloadForOffline />
                     </a>
                 </div>
@@ -67,7 +73,43 @@ const PinDetail = ({ pin }) => {
                 <h1 className="text-4xl font-bold break-words mt-3">
                     {pinDetail.title}
                 </h1>
+                <p className="mt-3">{pinDetail.about}</p>
             </div>
+            <Link
+                alt="user-profile" 
+                to={`/user-profile/${pinDetail?.postedBy?._id}`} 
+                className="flex gap-2 mt-5 items-center bg-white rounded-lg"
+            >
+                <img 
+                    alt="user-profile" 
+                    src={pinDetail?.postedBy?.image} 
+                    className='w-8 h-8 rounded-full object-cover'
+                />
+                <p className="font-semibold capitalize">{pinDetail?.postedBy?.userName}</p>
+            </Link>
+            <h2 className="mt-5 text-2xl">Comments</h2>
+            <div className="max-h-370 overflow-y-auto">
+                {pinDetail?.comments?.map((comment) => (
+                    <div className="flex gap-2 mt-5 items-center bg-white rounded-lg" key={comment.comment}>
+                        <img 
+                            src={comment.postedBy?.image} 
+                            alt="user-profile" 
+                            className="w-10 h-10 rounded-full cursor-pointer" 
+                        />
+                        <div className="flex flex-col">
+                            <p className="font-bold">{comment.postedBy?.userName}</p>
+                            <p>{comment.comment}</p>
+                        </div>
+                    </div>
+                ))}
+            </div>
+            <input 
+                type="text"
+                placeholder='Add a comment' 
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+                className="flex-1 outline-none rounded-full cursor-pointer" 
+            />
         </div>
     </div>
   )
