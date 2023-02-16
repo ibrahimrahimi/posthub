@@ -13,14 +13,12 @@ function Pin({ pin }) {
     const [savingPost, setSavingPost] = useState(false);
     const navigate = useNavigate();
     
-    const {postedBy, image, _id, destination } = pin;
-
+    const { postedBy, image, _id, destination, save } = pin;
     const user = fetchUser();
-
-    const alreadySaved = (pin?.save?.filter((item) => item.postedBy._id === user.sub));
+    const alreadySaved = save?.filter((item) => item.postedBy._id === user.sub);
     
     const savePin = (id) => {
-        if(alreadySaved.lenght !== 0) {
+        if(alreadySaved?.length === 0) {
             setSavingPost(true);
 
             client.patch(id)
@@ -58,7 +56,7 @@ function Pin({ pin }) {
                 className="relative cursor-zoom-in w-auto hover:shadow-lg rounded-lg overflow-hidden transition-all duration-500 ease-in-out"
             >
             {image && (
-                <img className="rounded-lg w-full " src={(urlFor(image).width(250).url())} alt="user-post" /> )}
+                <img className="rounded-lg w-full" src={(urlFor(image).width(250).url())} alt="user-post" /> )}
                 {postHovered && (
                 <div
                     className="absolute top-0 w-full h-full flex flex-col justify-between p-1 pr-2 pt-2 pb-2 z-50"
