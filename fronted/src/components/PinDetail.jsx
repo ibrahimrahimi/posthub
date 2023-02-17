@@ -22,7 +22,6 @@ const PinDetail = ({ user }) => {
          if(query) {
             client.fetch(`${query}`).then((data) => {
                 setPinDetail(data[0]);
-                console.log(data);
 
                 if(data[0]) {
                     const query1 = pinDetailMorePinQuery(data[0]);
@@ -39,9 +38,7 @@ const PinDetail = ({ user }) => {
     }, [pinId]);
 
     if(!pinDetail) {
-        return(
-            <Spinner message="Showing pin" />
-        )
+        return(<Spinner message="Showing pin" />);
     };
 
     const addComment = () => {
@@ -67,6 +64,11 @@ const PinDetail = ({ user }) => {
                 })
         }
     };
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		addComment();
+	}
 
 	return (
 		<>
@@ -134,30 +136,32 @@ const PinDetail = ({ user }) => {
 						>
 							<img alt="user-profile"src={pinDetail?.postedBy?.image} className='w-10 h-10 rounded-md object-cover' />
 						</Link>
-						<input 
-							type="text"
-							placeholder='Add a comment' 
-							value={comment}
-							onChange={(e) => setComment(e.target.value)}
-							className="flex-1 border-gray-100 border-2 p-2 outline-none rounded-md cursor-pointer" 
-						/>
-						<button
-							type="button"
-							onClick={addComment}
-							onKeyDown={addComment}
-							className="bg-green-500 text-white rounded-md px-6 py-2 font-semibold text-base outline-none"
-						>
-							{addingComment ? 'Posting the comment...' : 'Comment'}
-						</button>
+						<form onSubmit={(e) => handleSubmit(e)}>
+							<input 
+								type="text"
+								placeholder='Add a comment' 
+								value={comment}
+								onChange={(e) => setComment(e.target.value)}
+								className="flex-1 border-gray-100 border-2 p-2 outline-none rounded-md cursor-pointer" 
+							/>
+							<button
+								type="button"
+								onClick={addComment}
+								className="ml-2 bg-green-500 text-white rounded-md px-6 py-2 font-semibold text-base outline-none"
+							>
+								{addingComment ? 'Posting the comment...' : 'Comment'}
+							</button>
+						</form>
 					</div>
 				</div>
 			</div>
 			)}
 			{pins?.length > 0 && (
-				
-				<h2 className="text-center font-bold text-2xl mt-8 mb-4">
-					More like this 
-				</h2>
+				<div className="flex items-center justify-center border-t-2 rounded-t-md mt-4 border-gray-200 border-solid w-full h-16">
+					<h2 className="text-center font-bold text-2xl mt-8 mb-4">
+						More like this 
+					</h2>
+				</div>
 				
 			)}
 			{pins ? ( 
