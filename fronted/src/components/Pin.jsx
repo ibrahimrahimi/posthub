@@ -15,7 +15,7 @@ function Pin({ pin }) {
     
     const { postedBy, image, _id, destination, save } = pin;
     const user = fetchUser();
-    const alreadySaved = save?.filter((item) => item.postedBy._id === user.sub);
+    const alreadySaved = save?.filter((item) => item.postedBy._id === user?.sub);
     
     const savePin = (id) => {
         if(alreadySaved?.length === 0) {
