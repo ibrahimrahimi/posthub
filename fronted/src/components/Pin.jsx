@@ -100,7 +100,7 @@ function Pin({ pin }) {
                             >
                             {' '}
                             <BsFillArrowUpRightCircleFill />
-                            {destination?.slice(8, 17)}...
+                            {destination?.slice(0, 15)}...
                             </a>
                         ) : undefined}
 
