@@ -92,7 +92,7 @@ function CreatePin({ user }) {
                                     </p>
                                     <p className="text-lg">Click to upload</p>
                                 </div> 
-                                <p className="mt-32 text-gray-400">
+                                <p className="mt-28 text-gray-400">
                                     Use high-quality JPG, SVG, PNG, GIF or TIFE less than 20 MB.
                                 </p>
                             </div>

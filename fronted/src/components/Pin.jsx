@@ -126,8 +126,8 @@ function Pin({ pin }) {
             )}
             </div>
             <Link to={`/user-profile/${postedBy?._id}`} 
-                className="flex gap-2 mt-2 pt-2 items-center  border-t-gray-200 border-t">
-                <img src={postedBy?.image} alt="user-profile" className='w-8 h-8 rounded-lg object-cover'/>
+                className="flex gap-2 mt-2 pt-2 pb-1 items-center  border-t-gray-200 border-t">
+                <img src={postedBy?.image} alt="user-profile" className='w-8 h-8 rounded-xl object-cover'/>
                 <p href="" className="font-semibold capitalize text-gray-800">{postedBy?.userName}</p>
             </Link>
         </div>
