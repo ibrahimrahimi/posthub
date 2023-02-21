@@ -15,7 +15,9 @@ function Pin({ pin }) {
     
     const { postedBy, image, _id, destination, save } = pin;
     const user = fetchUser();
-    const alreadySaved = save?.filter((item) => item.postedBy._id === user?.sub);
+
+    let alreadySaved = pin?.save?.filter((item) => item?.postedBy?._id === user?.sub);
+    alreadySaved = alreadySaved?.length > 0 ? alreadySaved: [];
     
     const savePin = (id) => {
         if(alreadySaved?.length === 0) {
@@ -48,15 +50,15 @@ function Pin({ pin }) {
     };
 
     return (
-        <div className="m-2">
+        <div className="m-2 shadow-md">
             <div
                 onMouseEnter={() => setPostHovered(true)}
                 onMouseLeave={() => setPostHovered(false)}
                 onClick={() => navigate(`/pin-detail/${_id}`)}
-                className="relative cursor-zoom-in w-auto hover:shadow-lg rounded-lg overflow-hidden transition-all duration-500 ease-in-out shadow-lg"
+                className="relative cursor-zoom-in w-auto hover:shadow-lg rounded-t-lg overflow-hidden transition-all duration-500 ease-in-out"
             >
             {image && (
-                <img className="rounded-lg w-full" src={(urlFor(image).width(250).url())} alt="user-post" /> )}
+                <img className="rounded-md w-full" src={(urlFor(image).width(250).url())} alt="user-post" /> )}
                 {postHovered && (
                 <div
                     className="absolute top-0 w-full h-full flex flex-col justify-between p-1 pr-2 pt-2 pb-2 z-50"
@@ -75,16 +77,19 @@ function Pin({ pin }) {
                         </div>
                         {alreadySaved?.length !== 0 ? (
                             <button 
-                                type="button" 
-                                className="bg-red-500 opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-3xl hover:shadow-md outline-none"
+                                type="button"
+                                className="bg-cyan-500 opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-md hover:shadow-md outline-none"
                             >
                                 {pin?.save?.length} Saved
                             </button>
                             ) : (
                             <button
                                 type="button"
-                                onClick={(e) => {e.stopPropagation(); savePin(_id);}}
-                                className="bg-red-500 opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-3xl hover:shadow-md outline-none"
+                                onClick={
+                                    (e) => {e.stopPropagation(); 
+                                    savePin(_id);
+                                }}
+                                className="bg-cyan-500 opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-md hover:shadow-md outline-none"
                             >
                                 {pin?.save?.length}   {savingPost ? 'Saving' : 'Save'}
                             </button>
@@ -121,9 +126,9 @@ function Pin({ pin }) {
             )}
             </div>
             <Link to={`/user-profile/${postedBy?._id}`} 
-                className="flex gap-2 mt-2 items-center">
-                <img src={postedBy?.image} alt="user-profile" className='w-8 h-8 rounded-full object-cover'/>
-                <p href="" className="font-semibold capitalize">{postedBy?.userName}</p>
+                className="flex gap-2 mt-2 pt-2 items-center  border-t-gray-200 border-t">
+                <img src={postedBy?.image} alt="user-profile" className='w-8 h-8 rounded-lg object-cover'/>
+                <p href="" className="font-semibold capitalize text-gray-800">{postedBy?.userName}</p>
             </Link>
         </div>
     );

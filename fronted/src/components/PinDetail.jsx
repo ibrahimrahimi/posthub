@@ -1,5 +1,8 @@
 import React, { useState, useEffect} from 'react';
 import { MdDownloadForOffline } from 'react-icons/md';
+import { FaRegCommentDots } from 'react-icons/fa';
+import { CiShare1 } from 'react-icons/ci';
+import { SlLike } from 'react-icons/sl';
 import { Link, useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -27,7 +30,7 @@ const PinDetail = ({ user }) => {
                     const query1 = pinDetailMorePinQuery(data[0]);
                     client.fetch(query1).then((res) => {
                         setPins(res);
-                    })
+                    });
                 }
             });
          }
@@ -61,14 +64,15 @@ const PinDetail = ({ user }) => {
                     fetchPinDetails();
                     setComment('');
                     setAddingComment(false);
-                })
+                    window.location.reload();
+                });
         }
     };
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		addComment();
-	}
+	};
 
 	return (
 		<>
@@ -112,16 +116,29 @@ const PinDetail = ({ user }) => {
 						<img alt="user-profile"src={pinDetail?.postedBy?.image} className='w-10 h-10 rounded-md object-cover' />
 						<p className="font-semibold capitalize">{pinDetail?.postedBy?.userName}</p>
 					</Link>
-					<h2 className="mt-5 text-2xl">Comments</h2>
+					<div className="flex flex-row mt-5 text-2xl justify-between border-t border-b border-t-gray-200 border-b-gray-200 py-4 px-8">
+                        <a href="" className='flex gap-2'>
+                            <SlLike className='pt-1' size={28}/>
+                            Like
+                        </a>
+                        <a href="" className='flex gap-2'>
+                            <FaRegCommentDots className='pt-1' size={28}/>
+                            Comments
+                        </a>
+                        <a href="" className='flex gap-2'>
+                            <CiShare1 className='pt-1' size={28}/>
+                            Share
+                        </a>
+                    </div>
 					<div className="max-h-370 overflow-y-auto">
 						{pinDetail?.comments?.map((comment) => (
-							<div className="flex gap-2 mt-5 items-center bg-white rounded-lg" key={comment?._key}>
+							<div className="flex gap-2 mt-2 justify-start rounded-lg" key={comment?._key}>
 								<img 
 									src={comment.postedBy?.image} 
 									alt="user-profile" 
-									className="w-10 h-10 rounded-xl cursor-pointer" 
+									className="w-10 h-10 rounded-full cursor-pointer " 
 								/>
-								<div className="flex flex-col">
+								<div className="flex flex-col p-4 rounded-2xl bg-gray-100">
 									<p className="font-bold">{comment.postedBy?.userName}</p>
 									<p>{comment.comment}</p>
 								</div>

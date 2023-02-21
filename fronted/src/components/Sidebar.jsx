@@ -31,7 +31,7 @@ const Sidebar = ({closeToggle, user}) => {
 						className={({ isActive }) => (isActive ? isActiveStyle : isNotActiveStyle)}
 						onClick={handleCloseSidebar}
 					>
-						<RiHomeFill />
+						<RiHomeFill fontSize={18} className="mb-0.5" />
 						Home
 					</NavLink>
 					<h3 className="mt-2 px-5 text-base 2xl:text-xl">Discover Categories</h3>

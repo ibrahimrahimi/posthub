@@ -63,7 +63,7 @@ function UserProfile() {
                 <div className="relative flex flex-col mb-7">
                     <div className="flex flex-col justify-center items-center">
                         <img src={randomImage} alt="user-picture" className="w-full h-370 2xl:h-510 shadow-lg object-cover" />
-                        <img src={user.image} alt="user-profile" className="rounded-full w-20 h-20 xl:w-32 xl:h-32 xl:-mt-16 -mt-10 shadow-xl object-cover" />
+                        <img src={user.image} alt="user-profile" className="rounded-full w-20 h-20 xl:w-32 xl:h-32 xl:-mt-16 -mt-10 shadow-xl object-cover border-2 border-gray-400 shadow-slate-400" />
                     </div>
                     <h1 className="font-bold text-3xl text-center mt-3">{user.userName}</h1>
                     <div className="absolute top-0 z-1 right-0 p-2">
@@ -84,7 +84,7 @@ function UserProfile() {
                         type="button"
                         onClick={(e) => {
                             setText(e.target.textContent);
-                            setActiveBtn('saved');
+                            setActiveBtn('created');
                         }}
                     >
                         Created
